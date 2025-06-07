@@ -34,7 +34,8 @@ function App() {
     const formData = new FormData();
     formData.append('file', file);
     try {
-      const res = await axios.post('/api/upload', formData, {
+      const apiUrl = process.env.REACT_APP_API_URL || '';
+      const res = await axios.post(`${apiUrl}/api/upload`, formData, {
         onUploadProgress: (progressEvent) => {
           setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total));
         },
