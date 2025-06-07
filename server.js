@@ -21,7 +21,11 @@ try {
 }
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*', // Update this with your frontend URL in production
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type']
+}));
 app.use(express.json());
 app.use(fileUpload({
   limits: { fileSize: 10 * 1024 * 1024 * 1024 }, // 10GB
@@ -67,9 +71,9 @@ app.post('/api/subscribe', (req, res) => {
   res.json({ success: true });
 });
 
-app.use(express.static(path.join(__dirname, 'client/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({ status: 'ok' });
 });
 
 app.listen(PORT, () => {

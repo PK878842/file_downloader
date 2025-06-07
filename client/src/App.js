@@ -26,15 +26,12 @@ function App() {
       setError('Please select a ZIP file.');
       return;
     }
-    if (file.size > 10 * 1024 * 1024 * 1024) {
-      setShowSubscribe(true);
-      setError('File exceeds 10GB. Please subscribe to upload larger files.');
-      return;
-    }
+    
     const formData = new FormData();
     formData.append('file', file);
+    
     try {
-      const apiUrl = process.env.REACT_APP_API_URL || '';
+      const apiUrl = process.env.REACT_APP_API_URL || 'https://file-share-app.onrender.com';
       const res = await axios.post(`${apiUrl}/api/upload`, formData, {
         onUploadProgress: (progressEvent) => {
           setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total));
