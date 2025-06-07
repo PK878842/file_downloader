@@ -1,0 +1,13 @@
+[build]
+  base = "/"
+  command = "npm run netlify-deploy"
+  publish = "client/build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
